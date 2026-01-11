@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     title: "The Ketelman Report - Market Intelligence",
     description: "Analizy, których nie znajdziesz w mainstreamowych mediach. Dołącz do inwestorów czytających nasze raporty.",
     type: "website",
-    url: "https://ketelman.pl/blog", // Zmień na swój URL
+    url: "https://ketelman.com/blog", // Zmień na swój URL
   },
 };
 
@@ -30,7 +30,7 @@ export default function BlogPage() {
     "@type": "Blog",
     "name": "Ketelman Insights",
     "description": "Raporty rynkowe i analizy technologiczne",
-    "url": "https://ketelman.pl/blog",
+    "url": "https://ketelman.com/blog",
     "blogPost": ALL_ARTICLES.map((article) => ({
       "@type": "BlogPosting",
       "headline": article.title,
@@ -40,7 +40,7 @@ export default function BlogPage() {
         "@type": "Organization",
         "name": "Ketelman Holding"
       },
-      "url": `https://ketelman.pl/blog/${article.slug}`
+      "url": `https://ketelman.com/blog/${article.slug}`
     }))
   };
 
