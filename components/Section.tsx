@@ -3,16 +3,17 @@ import React from "react";
 
 interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   variant?: "default" | "darker" | "highlight";
+  // Dodajemy prop 'as', który pozwala zmienić tag HTML (np. na 'main', 'footer')
+  as?: React.ElementType; 
 }
 
-// To jest nasze "styled.section"
 const Section = React.forwardRef<HTMLElement, SectionProps>(
-  ({ className, variant = "default", children, ...props }, ref) => {
+  ({ className, variant = "default", as: Tag = "section", children, ...props }, ref) => {
     return (
-      <section
+      <Tag
         ref={ref}
         className={cn(
-          // Bazowe style: duży padding góra/dół, centrowanie zawartości
+          // Bazowe style
           "py-24 px-6 md:px-12 lg:py-32 relative overflow-hidden",
           // Warianty tła
           variant === "default" && "bg-transparent",
@@ -22,14 +23,21 @@ const Section = React.forwardRef<HTMLElement, SectionProps>(
         )}
         {...props}
       >
-        {/* Opcjonalny element dekoracyjny - pionowe linie jak w wieżowcach */}
-        <div className="absolute inset-0 flex justify-between pointer-events-none opacity-10 max-w-7xl mx-auto px-6">
+        {/* ARIA-HIDDEN="TRUE" - Ważne dla SEO/Dostępności */}
+        {/* Mówimy robotom i czytnikom ekranowym: "Ignorujcie te paski, to tylko dekoracja" */}
+        <div 
+            className="absolute inset-0 flex justify-between pointer-events-none opacity-10 max-w-7xl mx-auto px-6"
+            aria-hidden="true" 
+        >
             <div className="w-px h-full bg-white/20"></div>
             <div className="w-px h-full bg-white/20"></div>
             <div className="w-px h-full bg-white/20 hidden md:block"></div>
         </div>
-        <div className="max-w-7xl mx-auto relative z-10">{children}</div>
-      </section>
+        
+        <div className="max-w-7xl mx-auto relative z-10">
+            {children}
+        </div>
+      </Tag>
     );
   }
 );
