@@ -7,12 +7,14 @@ import { ProjectCard } from "@/components/ProjectCard";
 import Link from "next/link";
 import {
   ArrowRight, Code2, LineChart, Building2,
-  Users, Milestone, Terminal, TrendingUp
+  Users, Milestone, Terminal, TrendingUp,
+  Cpu
 } from "lucide-react";
 
 import { ALL_PROJECTS } from "@/lib/projects";
 import { ALL_ARTICLES } from "@/lib/articles";
 import { SierpinskiBackground } from "@/components/SierpinskiBackground";
+import { OfferSection } from "@/components/offersection";
 
 export const metadata: Metadata = {
   title: "Ketelman | Holding Technologiczny & Custom Software House",
@@ -38,12 +40,18 @@ export default function Home() {
       {/* === 1. HERO SECTION (FULL SCREEN) === */}
       {/* ZMIANA: Używamy natywnego tagu <section> zamiast komponentu Section, 
           żeby mieć pełną kontrolę nad szerokością i wysokością (h-screen) */}
-      <section className="relative w-full h-[100dvh] flex flex-col justify-center items-center overflow-hidden ">
+      {/* === 1. HERO SECTION (FULL SCREEN) === */}
+      <section
+        // ZMIANA TUTAJ: Dodano 'pt-24 md:pt-0'. 
+        // Na mobile (pt-24) dodajemy odstęp od góry (ok. 96px), żeby treść nie wchodziła pod menu.
+        // Na desktopie (md:pt-0) zostawiamy 0, bo tam ekran jest wysoki i justify-center działa dobrze.
+        className="relative w-full h-[100dvh] flex flex-col justify-center items-center overflow-hidden pt-24 md:pt-0"
+      >
 
         {/* TŁO: Jest pozycjonowane absolutnie i zajmuje 100% tej sekcji */}
         <SierpinskiBackground />
 
-        {/* TREŚĆ: Zamknięta w kontenerze, żeby była wyśrodkowana i czytelna */}
+        {/* TREŚĆ: Zamknięta w kontenerze */}
         <div className="relative z-30 container mx-auto px-6 md:px-12 max-w-7xl h-full flex flex-col justify-center ">
 
           <div className="flex items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700 " >
@@ -63,26 +71,26 @@ export default function Home() {
             Otrzymujesz jakość, którą sami stosujemy we własnych biznesach.
           </Paragraph>
 
-          <div className="flex flex-col sm:flex-row gap-4 items-start justify-start mt-8 md:mt-12">
+          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-start mt-8 md:mt-12">
 
             {/* Przycisk 1: Portfolio */}
             <Link
               href="/portfolio"
               className="
-      w-fit                   /* KLUCZOWE: Szerokość dopasowana do treści */
-      whitespace-nowrap       /* Tekst w jednej linii */
-      border border-white/20 
-      text-white 
-      font-bold 
-      px-8 py-4 
-      hover:border-accent-blue hover:text-accent-blue 
-      transition-all 
-      text-center 
-      tracking-wide 
-      backdrop-blur-sm bg-black/30 
-      rounded-sm
-      flex items-center gap-2 group /* Flex do wyrównania ikony strzałki */
-    "
+          w-fit
+          whitespace-nowrap
+          border border-white/20 
+          text-white 
+          font-bold 
+          px-8 py-4 
+          hover:border-accent-blue hover:text-accent-blue 
+          transition-all 
+          text-center 
+          tracking-wide 
+          backdrop-blur-sm bg-black/30 
+          rounded-sm
+          flex items-center gap-2 group
+        "
             >
               ZOBACZ REALIZACJE
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
@@ -92,19 +100,19 @@ export default function Home() {
             <Link
               href="/kontakt"
               className="
-      w-fit                   /* KLUCZOWE: Szerokość dopasowana do treści */
-      whitespace-nowrap       /* Tekst w jednej linii */
-      border border-white/20 
-      text-white 
-      font-bold 
-      px-8 py-4 
-      hover:border-accent-blue hover:text-accent-blue 
-      transition-all 
-      text-center 
-      tracking-wide 
-      backdrop-blur-sm bg-black/30 
-      rounded-sm
-    "
+          w-fit
+          whitespace-nowrap
+          border border-white/20 
+          text-white 
+          font-bold 
+          px-8 py-4 
+          hover:border-accent-blue hover:text-accent-blue 
+          transition-all 
+          text-center 
+          tracking-wide 
+          backdrop-blur-sm bg-black/30 
+          rounded-sm
+        "
             >
               KONSULTACJA
             </Link>
@@ -112,108 +120,84 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Scroll Indicator (Opcjonalnie - strzałka w dół) */}
+        {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white/30 z-30 hidden md:block">
           <ArrowRight className="rotate-90 w-6 h-6" />
         </div>
       </section>
+      <OfferSection />
+      {/* === SEKCJA: FRAKTALNA JAKOŚĆ (Vision & Story) === */}
+      <Section className="py-24 md:py-32 border-t border-white/5">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-      {/* === 2. FOUNDERS === */}
-      {/* Tu wracamy do Twojego standardowego komponentu Section */}
-      <Section className="border-t border-white/5 py-16 md:py-24">
-        {/* ... reszta kodu Founders ... */}
-        <div className="grid lg:grid-cols-12 gap-12 items-center">
-          {/* ... (Wklej tutaj resztę kodu sekcji Founders bez zmian) ... */}
-          <div className="lg:col-span-4">
-            <p className="text-accent-blue font-mono mb-4 text-sm tracking-wider">/ THE BOARD</p>
-            <HeadingH2>Od Inwestorów <br />dla Inwestorów.</HeadingH2>
-            <Paragraph className="mb-6">
-              Nie jesteśmy &quot;studentami informatyki&quot;. Jesteśmy przedsiębiorcami, którzy nauczyli się technologii, by <strong>skalować własne biznesy</strong>.
-            </Paragraph>
-            <Link href="/o-nas" className="text-white border-b border-white/30 pb-1 hover:text-accent-blue hover:border-accent-blue transition-all">
-              Poznaj naszą historię &rarr;
-            </Link>
+          {/* LEWA KOLUMNA: Animacja (Okno na fraktal) */}
+          {/* Ustawiamy relative i overflow-hidden, aby 'zamknąć' ogromny trójkąt w mniejszym pudełku */}
+          <div className="relative h-[400px] w-full rounded-sm border border-white/10 bg-black overflow-hidden group">
+
+            {/* Tło animowane - używamy Twojego komponentu */}
+            <SierpinskiBackground />
+
+            {/* Dodatkowy overlay, żeby tekst/logo na wierzchu (opcjonalnie) był czytelny */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/20 pointer-events-none" />
+
+            {/* Ozdobny techniczny detal na wierzchu animacji */}
+            <div className="absolute bottom-6 left-6 z-10">
+              <p className="text-[10px] font-mono text-accent-blue uppercase tracking-widest border border-accent-blue/30 px-2 py-1 bg-black/50 backdrop-blur-md">
+                Fraktalna powtarzalność
+              </p>
+            </div>
+
+            {/* Efekt poświaty przy hoverze ramki */}
+            <div className="absolute inset-0 border border-accent-blue/0 group-hover:border-accent-blue/30 transition-all duration-700 pointer-events-none" />
           </div>
 
-          <div className="lg:col-span-8 grid md:grid-cols-2 gap-6">
-            <div className="group relative h-[400px] overflow-hidden border border-white/10 bg-white/5">
-              <Image
-                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2574&auto=format&fit=crop"
-                alt="Kamil Ketelman - CEO Ketelman Holding"
-                fill
-                className="object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-              <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent z-10">
-                <p className="text-2xl font-bold text-white">Kamil Ketelman</p>
-                <p className="text-accent-blue font-mono text-xs uppercase tracking-widest">CEO & Founder</p>
+          {/* PRAWA KOLUMNA: Copywriting */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <Cpu size={20} className="text-accent-blue" />
+              <span className="text-accent-blue font-mono text-xs uppercase tracking-widest">
+                Philosophy / Engineering
+              </span>
+            </div>
+
+            <HeadingH2 className="mb-6">
+              Kod wpisany w <br />
+              <span className="text-white/50">naturę rzeczy.</span>
+            </HeadingH2>
+
+            <div className="space-y-6 text-lg text-concrete-gray">
+              <p>
+                <strong className="text-white">Fraktal.</strong> Figura samopodobna, gdzie każda, nawet najmniejsza część, jest idealnym odzwierciedleniem całości. Trójkąt Sierpińskiego to nie tylko matematyczna abstrakcja – to symbol nieskończonej precyzji i skalowalności.
+              </p>
+
+              <p>
+                W <strong className="text-white">Ketelman Holding</strong> traktujemy inżynierię oprogramowania dokładnie tak samo. Odzwierciedlamy tę <strong>fraktalnie powtarzalną jakość</strong> w każdym projekcie. Niezależnie czy tworzymy mały moduł, czy potężną architekturę chmurową – standard wykonania pozostaje niezmiennie perfekcyjny.
+              </p>
+
+              <p>
+                Witamy na naszej stronie. Zachęcamy do głębszej analizy naszej <Link href="/oferta" className="text-accent-blue hover:underline">oferty</Link> oraz <Link href="/portfolio" className="text-accent-blue hover:underline">portfolio</Link>.
+              </p>
+
+              <div className="pt-4 border-l-2 border-accent-blue/30 pl-6 mt-8">
+                <p className="text-xl text-white italic">
+                  &quot;Jeśli chcesz wejść na rynek technologii internetowych, zdaje się, że trafiłeś do właściwego <span className="text-accent-blue font-bold not-italic">GATE</span>.&quot;
+                </p>
               </div>
             </div>
-            <div className="group relative h-[400px] overflow-hidden border border-white/10 bg-white/5">
-              <Image
-                src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2574&auto=format&fit=crop"
-                alt="Piotr Nowak - CTO Ketelman Holding"
-                fill
-                className="object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-              <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent z-10">
-                <p className="text-2xl font-bold text-white">Piotr &quot;Vector&quot; Nowak</p>
-                <p className="text-accent-blue font-mono text-xs uppercase tracking-widest">CTO & Partner</p>
-              </div>
+
+            <div className="mt-10">
+              <Link
+                href="/kontakt"
+                className="inline-flex items-center gap-2 text-white font-bold uppercase tracking-widest hover:text-accent-blue transition-colors group"
+              >
+                Otwórz bramę do współpracy
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
             </div>
           </div>
+
         </div>
       </Section>
-
-      {/* ... Reszta sekcji (Oferta, Portfolio, Blog, CTA) bez zmian ... */}
-      <Section variant="darker" className="py-16 md:py-32">
-        {/* ... Skopiuj resztę ze swojego poprzedniego kodu ... */}
-        {/* Jeśli potrzebujesz, mogę wkleić całość, ale chodzi głównie o zmianę pierwszej sekcji */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <HeadingH2>Model 360°</HeadingH2>
-          <Paragraph>
-            Kompleksowa obsługa cyklu życia produktu. Od kartki papieru po exit.
-          </Paragraph>
-        </div>
-        <div className="grid md:grid-cols-3 gap-6 mb-20">
-          {/* Karty... */}
-          <Card className="hover:bg-blue-950/20 p-8 flex flex-col h-full">
-            <Building2 className="w-12 h-12 text-accent-blue mb-6" aria-hidden="true" />
-            <h3 className="text-xl font-bold text-white mb-4">Venture Building</h3>
-            <p className="text-concrete-gray text-sm">Tworzymy MVP, wprowadzamy produkt na rynek i skalujemy go.</p>
-          </Card>
-          <Card className="hover:bg-blue-950/20 p-8 flex flex-col h-full">
-            <Code2 className="w-12 h-12 text-accent-blue mb-6" aria-hidden="true" />
-            <h3 className="text-xl font-bold text-white mb-4">Custom Software</h3>
-            <p className="text-concrete-gray text-sm">Systemy ERP, platformy handlowe, integracje bankowe. Zero WordPressa.</p>
-          </Card>
-          <Card className="hover:bg-blue-950/20 p-8 flex flex-col h-full">
-            <LineChart className="w-12 h-12 text-accent-blue mb-6" aria-hidden="true" />
-            <h3 className="text-xl font-bold text-white mb-4">Tech Consulting</h3>
-            <p className="text-concrete-gray text-sm">Audyty bezpieczeństwa, ratowanie projektów (Rescue Missions).</p>
-          </Card>
-        </div>
-
-        <div className="grid md:grid-cols-4 gap-4 border-t border-white/10 pt-16">
-          {[
-            { step: "01", title: "Discovery", icon: Users, desc: "Warsztaty strategiczne i weryfikacja modelu biznesowego." },
-            { step: "02", title: "Prototyping", icon: Milestone, desc: "Makiety UX/UI i architektura systemu." },
-            { step: "03", title: "Development", icon: Terminal, desc: "Kodowanie w sprincie dwutygodniowym. CI/CD." },
-            { step: "04", title: "Scaling", icon: TrendingUp, desc: "Monitoring, optymalizacja kosztów chmury, rozwój." }
-          ].map((item) => (
-            <div key={item.step} className="p-4 group">
-              <div className="text-4xl font-black text-white/5 mb-4 group-hover:text-accent-blue/20 transition-colors" aria-hidden="true">{item.step}</div>
-              <div className="flex items-center gap-2 mb-2 text-white font-bold">
-                <item.icon size={18} className="text-accent-blue" aria-hidden="true" />
-                <h4 className="inline">{item.title}</h4>
-              </div>
-              <p className="text-xs text-concrete-gray">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </Section>
-
       <Section className="py-16 md:py-32">
         {/* Portfolio Content */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 md:mb-16 gap-6 md:gap-0">
@@ -279,6 +263,104 @@ export default function Home() {
           ))}
         </div>
       </Section>
+
+      {/* === 2. FOUNDERS === */}
+      {/* Tu wracamy do Twojego standardowego komponentu Section */}
+      {/* <Section className="border-t border-white/5 py-16 md:py-24">
+        
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
+      
+          <div className="lg:col-span-4">
+            <p className="text-accent-blue font-mono mb-4 text-sm tracking-wider">/ THE BOARD</p>
+            <HeadingH2>Od Inwestorów <br />dla Inwestorów.</HeadingH2>
+            <Paragraph className="mb-6">
+              Nie jesteśmy &quot;studentami informatyki&quot;. Jesteśmy przedsiębiorcami, którzy nauczyli się technologii, by <strong>skalować własne biznesy</strong>.
+            </Paragraph>
+            <Link href="/o-nas" className="text-white border-b border-white/30 pb-1 hover:text-accent-blue hover:border-accent-blue transition-all">
+              Poznaj naszą historię &rarr;
+            </Link>
+          </div>
+
+          <div className="lg:col-span-8 grid md:grid-cols-2 gap-6">
+            <div className="group relative h-[400px] overflow-hidden border border-white/10 bg-white/5">
+              <Image
+                src="https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=2574&auto=format&fit=crop"
+                alt="Kamil Ketelman - CEO Ketelman Holding"
+                fill
+                className="object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent z-10">
+                <p className="text-2xl font-bold text-white">Kamil Ketelman</p>
+                <p className="text-accent-blue font-mono text-xs uppercase tracking-widest">CEO & Founder</p>
+              </div>
+            </div>
+            <div className="group relative h-[400px] overflow-hidden border border-white/10 bg-white/5">
+              <Image
+                src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=2574&auto=format&fit=crop"
+                alt="Piotr Nowak - CTO Ketelman Holding"
+                fill
+                className="object-cover grayscale opacity-60 group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-700"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
+              <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/80 to-transparent z-10">
+                <p className="text-2xl font-bold text-white">Piotr &quot;Vector&quot; Nowak</p>
+                <p className="text-accent-blue font-mono text-xs uppercase tracking-widest">CTO & Partner</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Section> */}
+
+
+      {/* ... Reszta sekcji (Oferta, Portfolio, Blog, CTA) bez zmian ... */}
+      <Section variant="darker" className="py-16 md:py-32">
+        {/* ... Skopiuj resztę ze swojego poprzedniego kodu ... */}
+        {/* Jeśli potrzebujesz, mogę wkleić całość, ale chodzi głównie o zmianę pierwszej sekcji */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <HeadingH2>Model 360°</HeadingH2>
+          <Paragraph>
+            Kompleksowa obsługa cyklu życia produktu. Od kartki papieru po exit.
+          </Paragraph>
+        </div>
+        <div className="grid md:grid-cols-3 gap-6 mb-20">
+          {/* Karty... */}
+          <Card className="hover:bg-blue-950/20 p-8 flex flex-col h-full">
+            <Building2 className="w-12 h-12 text-accent-blue mb-6" aria-hidden="true" />
+            <h3 className="text-xl font-bold text-white mb-4">Venture Building</h3>
+            <p className="text-concrete-gray text-sm">Tworzymy MVP, wprowadzamy produkt na rynek i skalujemy go.</p>
+          </Card>
+          <Card className="hover:bg-blue-950/20 p-8 flex flex-col h-full">
+            <Code2 className="w-12 h-12 text-accent-blue mb-6" aria-hidden="true" />
+            <h3 className="text-xl font-bold text-white mb-4">Custom Software</h3>
+            <p className="text-concrete-gray text-sm">Systemy ERP, platformy handlowe, integracje bankowe. Zero WordPressa.</p>
+          </Card>
+          <Card className="hover:bg-blue-950/20 p-8 flex flex-col h-full">
+            <LineChart className="w-12 h-12 text-accent-blue mb-6" aria-hidden="true" />
+            <h3 className="text-xl font-bold text-white mb-4">Tech Consulting</h3>
+            <p className="text-concrete-gray text-sm">Audyty bezpieczeństwa, ratowanie projektów (Rescue Missions).</p>
+          </Card>
+        </div>
+
+        <div className="grid md:grid-cols-4 gap-4 border-t border-white/10 pt-16">
+          {[
+            { step: "01", title: "Discovery", icon: Users, desc: "Warsztaty strategiczne i weryfikacja modelu biznesowego." },
+            { step: "02", title: "Prototyping", icon: Milestone, desc: "Makiety UX/UI i architektura systemu." },
+            { step: "03", title: "Development", icon: Terminal, desc: "Kodowanie w sprincie dwutygodniowym. CI/CD." },
+            { step: "04", title: "Scaling", icon: TrendingUp, desc: "Monitoring, optymalizacja kosztów chmury, rozwój." }
+          ].map((item) => (
+            <div key={item.step} className="p-4 group">
+              <div className="text-4xl font-black text-white/5 mb-4 group-hover:text-accent-blue/20 transition-colors" aria-hidden="true">{item.step}</div>
+              <div className="flex items-center gap-2 mb-2 text-white font-bold">
+                <item.icon size={18} className="text-accent-blue" aria-hidden="true" />
+                <h4 className="inline">{item.title}</h4>
+              </div>
+              <p className="text-xs text-concrete-gray">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
 
       <Section className="text-center py-20 md:py-32">
         <h2 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6">
