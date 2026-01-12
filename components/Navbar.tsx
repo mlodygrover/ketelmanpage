@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image"; // <--- 1. Importujemy Image
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
@@ -39,22 +40,24 @@ export const Navbar = () => {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             
-            {/* LOGO */}
+            {/* LOGO - ZMIANA TUTAJ */}
             <Link
               href="/"
-              className="text-xl font-bold tracking-tighter flex items-center z-50 relative group"
+              // Usunięto klasy tekstowe (font-bold itp.), zostawiono pozycjonowanie
+              className="flex items-center z-50 relative hover:opacity-80 transition-opacity"
               onClick={closeMenu}
-              aria-label="Strona główna"
+              aria-label="Strona główna - Ketelman Holding"
             >
-              KETELMAN
-              <span className="
-                  ml-1 
-                  text-transparent bg-clip-text 
-                  bg-gradient-to-b from-white to-gray-500
-                  transition-all duration-300 font-normal
-                ">
-                HOLDING
-              </span>
+              <Image
+                src="/logo2.png" // Upewnij się, że plik jest w folderze public/
+                alt="Ketelman Holding Logo"
+                // Width i Height określają proporcje (aspect ratio), CSS niżej kontroluje rozmiar
+                width={300} 
+                height={100}
+                // h-8 (32px) na mobile, h-10 (40px) na desktopie, szerokość auto
+                className="w-auto h-8 md:h-10 object-contain"
+                priority // Ładujemy priorytetowo (LCP)
+              />
             </Link>
 
             {/* DESKTOP MENU */}
@@ -93,13 +96,11 @@ export const Navbar = () => {
           </div>
         </div>
       </nav> 
-      {/* ⚠️ ZAMKNIĘCIE NAV JEST TUTAJ, A MENU MOBILNE PONIŻEJ */}
-
-      {/* MOBILE MENU OVERLAY - TERAZ POZA NAV */}
+      
+      {/* MOBILE MENU OVERLAY */}
       {isOpen && (
         <div
           id="mobile-menu"
-          // ZMIANA: z-40 (pod navbarem z-50) i pt-24 (odsuniecie od gory zeby nie wchodzilo pod logo)
           className="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 md:hidden flex flex-col justify-center items-center animate-in fade-in duration-200"
         >
           <ul className="flex flex-col items-center gap-8 list-none p-0">
