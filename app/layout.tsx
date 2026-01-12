@@ -16,9 +16,9 @@ export const metadata: Metadata = {
     default: "Ketelman Holding & Software House | Venture Building",
     template: "%s | Ketelman Holding" // %s zostanie zastąpione tytułem z podstrony (np. "Kontakt")
   },
-  
+
   description: "Nie jesteśmy tylko programistami. Jesteśmy praktykami biznesu. Tworzymy oprogramowanie dedykowane (ERP, CRM) i budujemy startupy, które sprawdziliśmy na własnym kapitale.",
-  
+
   // 3. Słowa kluczowe widoczne dla wszystkich stron
   keywords: ["software house", "venture building", "inwestycje", "aplikacje dedykowane", "systemy ERP"],
 
@@ -54,12 +54,11 @@ export const metadata: Metadata = {
   },
 
   // 6. Ikony (Favicon)
+  // Zostaw tylko to, jeśli K.png jest w folderze public
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: "/icon1.ico",
   },
-  
+
   // 7. Link Kanoniczny (Zapobiega duplikacji)
   alternates: {
     canonical: "./",
@@ -71,7 +70,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+
   // --- GLOBALNE DANE STRUKTURALNE (SCHEMA.ORG) ---
   const globalSchema = {
     "@context": "https://schema.org",
@@ -101,9 +100,9 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(globalSchema) }}
         />
-        
+
         <Navbar />
-        
+
         <main className="flex flex-col min-h-screen">
           {children}
         </main>

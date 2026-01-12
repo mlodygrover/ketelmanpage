@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import Image from "next/image"; // Kluczowe dla Core Web Vitals
+import Image from "next/image";
 import { HeadingH2, Paragraph } from "@/components/Typography";
 import { Section } from "@/components/Section";
 import Link from "next/link";
@@ -12,7 +12,6 @@ interface PageProps {
 }
 
 // === 1. GENEROWANIE ŚCIEŻEK STATYCZNYCH (SSG) ===
-// Dzięki temu Next.js wygeneruje pliki HTML dla każdego projektu podczas budowania
 export async function generateStaticParams() {
     return ALL_PROJECTS.map((project) => ({
         slug: project.slug,
@@ -38,7 +37,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
             title: `${project.title} | Realizacja Ketelman Holding`,
             description: project.description,
             images: [{ url: project.heroImage }],
-            type: "article", // Lub 'website', ale 'article' pasuje do case study
+            type: "article",
         },
     };
 }
@@ -54,7 +53,7 @@ export default async function ProjectPage({ params }: PageProps) {
   // --- 3. DANE STRUKTURALNE (SCHEMA.ORG) ---
   const schemaData = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication", // Mówimy Google: "To jest opis oprogramowania"
+    "@type": "SoftwareApplication",
     "name": project.title,
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web, iOS, Android",
@@ -65,12 +64,11 @@ export default async function ProjectPage({ params }: PageProps) {
     },
     "offers": {
         "@type": "Offer",
-        "price": "0", // Portfolio nie ma ceny, ale pole jest wymagane w niektórych walidatorach
+        "price": "0",
         "priceCurrency": "PLN"
     }
   };
 
-  // Breadcrumbs Schema
   const breadcrumbSchema = {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
@@ -93,7 +91,6 @@ export default async function ProjectPage({ params }: PageProps) {
 
   return (
     <>
-      {/* Wstrzyknięcie JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
@@ -103,50 +100,58 @@ export default async function ProjectPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      {/* === HERO SECTION === */}
-      <section className="relative h-[80vh] flex items-end pb-20 overflow-hidden">
-        {/* Optymalizacja tła Hero za pomocą Next/Image */}
+      {/* === HERO SECTION (POPRAWIONA RESPONSYWNOŚĆ) === */}
+      {/* Zmiany: min-h-[100dvh] (zamiast sztywnego h-80vh), dodany pt-32 (padding góry) */}
+      <section className="relative min-h-[100dvh] md:min-h-[85vh] flex flex-col justify-end pt-32 pb-16 md:pb-24 overflow-hidden">
+        
+        {/* Tło */}
         <Image
             src={project.heroImage}
             alt={`Tło projektu ${project.title}`}
             fill
-            priority // Najważniejszy obrazek na stronie (LCP)
+            priority
             className="object-cover z-0"
             quality={90}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30 z-10" aria-hidden="true" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/40 z-10" aria-hidden="true" />
 
         <div className="max-w-7xl mx-auto px-6 relative z-20 w-full">
-            <Link href="/portfolio" className="inline-flex items-center text-white/70 hover:text-accent-blue mb-8 transition-colors group text-sm font-mono uppercase tracking-widest">
-                <ArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform" size={16} />
+            <Link href="/portfolio" className="inline-flex items-center text-white/70 hover:text-accent-blue mb-6 md:mb-8 transition-colors group text-xs md:text-sm font-mono uppercase tracking-widest backdrop-blur-sm bg-black/20 px-3 py-1 rounded-sm border border-white/10">
+                <ArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform" size={14} />
                 Wróć do Portfolio
             </Link>
             
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-                <div>
-                    <span className="text-accent-blue font-mono uppercase tracking-widest text-sm bg-accent-blue/10 px-3 py-1 rounded-sm border border-accent-blue/20">
+            {/* Flex container - na mobile kolumna, na desktopie wiersz */}
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 md:gap-12">
+                
+                {/* Lewa kolumna: Tytuł i opis */}
+                <div className="lg:max-w-3xl">
+                    <span className="text-accent-blue font-mono uppercase tracking-widest text-xs md:text-sm bg-accent-blue/10 px-3 py-1 rounded-sm border border-accent-blue/20">
                         {project.category}
                     </span>
-                    <h1 className="text-5xl md:text-7xl font-extrabold text-white mt-4 mb-2 tracking-tight">
+                    {/* H1 zmniejszony na mobile dla czytelności */}
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mt-4 mb-4 tracking-tight leading-tight">
                         {project.title}
                     </h1>
-                    <p className="text-xl text-concrete-gray max-w-2xl">
+                    <p className="text-lg md:text-xl text-concrete-gray max-w-2xl leading-relaxed">
                         {project.description}
                     </p>
                 </div>
                 
-                <div className="flex flex-col gap-4 bg-white/5 backdrop-blur-md p-6 border border-white/10 rounded-sm min-w-[250px]">
+                {/* Prawa kolumna: Metadane projektu */}
+                {/* Zmiana: Grid zamiast flex-col, żeby na mobile ładnie się rozłożyło w poziomie lub pionie zależnie od miejsca */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 lg:gap-6 bg-white/5 backdrop-blur-md p-6 border border-white/10 rounded-sm lg:min-w-[280px]">
                     <div>
-                        <p className="text-xs text-white/50 uppercase font-mono">Klient</p>
-                        <p className="text-white font-bold">{project.client}</p>
+                        <p className="text-[10px] md:text-xs text-white/50 uppercase font-mono mb-1">Klient</p>
+                        <p className="text-white font-bold text-sm md:text-base">{project.client}</p>
                     </div>
                     <div>
-                        <p className="text-xs text-white/50 uppercase font-mono">Czas realizacji</p>
-                        <p className="text-white font-bold">{project.duration}</p>
+                        <p className="text-[10px] md:text-xs text-white/50 uppercase font-mono mb-1">Czas realizacji</p>
+                        <p className="text-white font-bold text-sm md:text-base">{project.duration}</p>
                     </div>
                      <div>
-                        <p className="text-xs text-white/50 uppercase font-mono">Zespół</p>
-                        <p className="text-white font-bold">{project.teamSize}</p>
+                        <p className="text-[10px] md:text-xs text-white/50 uppercase font-mono mb-1">Zespół</p>
+                        <p className="text-white font-bold text-sm md:text-base">{project.teamSize}</p>
                     </div>
                 </div>
             </div>
@@ -159,12 +164,12 @@ export default async function ProjectPage({ params }: PageProps) {
             {project.stats.map((stat: any, idx: number) => (
                 <div key={idx} className="text-center group">
                     <div className="flex justify-center mb-4">
-                        <div className="p-4 bg-accent-blue/5 rounded-full border border-accent-blue/20 group-hover:bg-accent-blue/20 transition-colors">
-                            <stat.icon className="w-8 h-8 text-accent-blue" aria-hidden="true" />
+                        <div className="p-3 md:p-4 bg-accent-blue/5 rounded-full border border-accent-blue/20 group-hover:bg-accent-blue/20 transition-colors">
+                            <stat.icon className="w-6 h-6 md:w-8 md:h-8 text-accent-blue" aria-hidden="true" />
                         </div>
                     </div>
-                    <p className="text-4xl md:text-5xl font-bold text-white mb-2">{stat.value}</p>
-                    <p className="text-sm text-concrete-gray uppercase tracking-widest">{stat.label}</p>
+                    <p className="text-3xl md:text-5xl font-bold text-white mb-2">{stat.value}</p>
+                    <p className="text-xs md:text-sm text-concrete-gray uppercase tracking-widest">{stat.label}</p>
                 </div>
             ))}
         </div>
@@ -172,8 +177,8 @@ export default async function ProjectPage({ params }: PageProps) {
 
       {/* === CASE STUDY (TREŚĆ) === */}
       <Section>
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-            <div className="sticky top-32">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+            <div className="lg:sticky lg:top-32">
                 <p className="text-red-500 font-mono mb-2 text-sm tracking-wider">/ THE CHALLENGE</p>
                 <HeadingH2>Punkt krytyczny.</HeadingH2>
                 <Paragraph className="text-white/80 text-lg">
@@ -191,7 +196,7 @@ export default async function ProjectPage({ params }: PageProps) {
                     {project.solution}
                 </Paragraph>
                 
-                {/* Zdjęcie 1 z Galerii - Optymalizacja */}
+                {/* Zdjęcie 1 */}
                 <figure className="my-10 relative aspect-video overflow-hidden rounded-sm border border-white/10 group">
                     <Image 
                         src={project.gallery[0]} 
@@ -207,9 +212,9 @@ export default async function ProjectPage({ params }: PageProps) {
                 <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                     <Cpu className="text-accent-blue" aria-hidden="true" /> Użyte Technologie
                 </h3>
-                <ul className="flex flex-wrap gap-3">
+                <ul className="flex flex-wrap gap-2 md:gap-3">
                     {project.stack.map((tech: string) => (
-                        <li key={tech} className="bg-white/5 border border-white/10 px-4 py-2 text-sm text-white hover:border-accent-blue/50 hover:bg-accent-blue/5 transition-all cursor-default">
+                        <li key={tech} className="bg-white/5 border border-white/10 px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm text-white hover:border-accent-blue/50 hover:bg-accent-blue/5 transition-all cursor-default rounded-sm">
                             {tech}
                         </li>
                     ))}
@@ -223,8 +228,7 @@ export default async function ProjectPage({ params }: PageProps) {
           <div className="max-w-7xl mx-auto px-6 mb-10">
               <HeadingH2>Wizualizacja</HeadingH2>
           </div>
-          <div className="w-full h-[60vh] relative">
-              {/* Zdjęcie 2 z Galerii - Optymalizacja */}
+          <div className="w-full h-[40vh] md:h-[60vh] relative">
                <Image 
                     src={project.gallery[1]} 
                     alt={`Wizualizacja dashboardu ${project.title}`} 
@@ -237,16 +241,16 @@ export default async function ProjectPage({ params }: PageProps) {
       </section>
 
       {/* === CTA === */}
-      <Section variant="darker" className="text-center py-32">
+      <Section variant="darker" className="text-center py-20 md:py-32">
           <HeadingH2>Twoja firma może być następna.</HeadingH2>
           <Paragraph>
               Podoba Ci się to podejście? Zbudujmy coś podobnego dla Ciebie.
           </Paragraph>
-          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-              <Link href="/kontakt" className="bg-accent-blue text-black font-bold px-8 py-4 hover:bg-white transition-colors">
+          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 items-center">
+              <Link href="/kontakt" className="w-full sm:w-auto bg-accent-blue text-black font-bold px-8 py-4 hover:bg-white transition-colors rounded-sm text-center">
                   ROZPOCZNIJ PROJEKT
               </Link>
-              <Link href="/portfolio" className="border border-white/20 text-white font-bold px-8 py-4 hover:text-accent-blue hover:border-accent-blue transition-colors">
+              <Link href="/portfolio" className="w-full sm:w-auto border border-white/20 text-white font-bold px-8 py-4 hover:text-accent-blue hover:border-accent-blue transition-colors rounded-sm text-center">
                   INNE REALIZACJE
               </Link>
           </div>
