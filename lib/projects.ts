@@ -1,8 +1,11 @@
 // src/lib/projects.ts
-import { 
-  BarChart3, Clock, Database, ShieldCheck, 
+import {
+  BarChart3, Clock, Database, ShieldCheck,
   Users, CheckCircle2, Server, Globe, Smartphone, Zap,
-  Map, Plane, Leaf, Heart, Ticket
+  Map, Plane, Leaf, Heart, Ticket,
+  ShoppingBag,
+  Recycle,
+  MonitorPlay
 } from "lucide-react";
 
 export interface Project {
@@ -24,6 +27,7 @@ export interface Project {
 
 export const ALL_PROJECTS: Project[] = [
   // === PROJEKTY WŁASNE (HOLDING) ===
+
   {
     slug: "draft-and-go-web",
     type: "holding",
@@ -46,6 +50,30 @@ export const ALL_PROJECTS: Project[] = [
     gallery: [
       "https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=2535&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=2670&auto=format&fit=crop"
+    ]
+  },
+  {
+    slug: "playagain-store",
+    type: "holding",
+    title: "PlayAgain Store",
+    category: "E-commerce / GreenTech",
+    heroImage: "https://res.cloudinary.com/dkfgniqzt/image/upload/v1769033375/Zrzut_ekranu_2026-01-21_o_23.06.19_l7n9r7.png", // Obraz gamingowy/tech
+    description: "Innowacyjna platforma e-commerce redefiniująca rynek używanego sprzętu komputerowego. PlayAgain to nie tylko sklep, to ekosystem 'Circular Economy', który daje drugie życie topowym podzespołom PC. Wyróżnikiem jest zaawansowany konfigurator 3D, który pozwala graczom budować wymarzone zestawy z części refurbished.",
+    client: "Ketelman Ventures (Własne)",
+    duration: "W rozwoju (od 2024)",
+    teamSize: "6 Specjalistów",
+    stats: [
+      { label: "Oszczędność Klientów", value: "do 40%", icon: ShoppingBag },
+      { label: "Redukcja e-odpadów", value: "15kg/PC", icon: Recycle },
+      { label: "Gwarancja", value: "24 m-ce", icon: ShieldCheck },
+      { label: "Konfigurator 3D", value: "Tak", icon: MonitorPlay },
+    ],
+    challenge: "Rynek używanej elektroniki kojarzy się z ryzykiem i brakiem gwarancji. Gracze chcą taniego sprzętu, ale boją się 'koparek kryptowalut' i zużytych części. Brakowało miejsca, które łączy niską cenę używki z bezpieczeństwem zakupu nowego sprzętu.",
+    solution: "Stworzyliśmy platformę z pełnym procesem certyfikacji sprzętu. Sercem systemu jest interaktywny Konfigurator PC 3D (Three.js), który wizualizuje zestaw w czasie rzeczywistym i weryfikuje kompatybilność części (AI). Całość oparta o architekturę headless commerce dla maksymalnej wydajności.",
+    stack: ["Next.js 14", "MongoDB", "Three.js (R3F)", "Stripe Payments", "Tailwind CSS", "OpenAI API"],
+    gallery: [
+      "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=2574&auto=format&fit=crop", // Setup gamingowy
+      "https://images.unsplash.com/photo-1603481588273-2f908a9a7a1b?q=80&w=2670&auto=format&fit=crop"  // Podzespoły PC
     ]
   },
   {
@@ -150,7 +178,7 @@ export const ALL_PROJECTS: Project[] = [
 
 // Helper function (hack na ikonę w obiekcie powyżej, żeby TypeScript nie krzyczał przy kopiowaniu)
 function checkCircleIconFake() {
-    return CheckCircle2;
+  return CheckCircle2;
 }
 
 export function getProject(slug: string) {
