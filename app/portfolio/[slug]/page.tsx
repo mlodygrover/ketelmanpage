@@ -3,7 +3,8 @@ import Image from "next/image";
 import { HeadingH2, Paragraph } from "@/components/Typography";
 import { Section } from "@/components/Section";
 import Link from "next/link";
-import { ArrowLeft, Cpu } from "lucide-react";
+// DODANO IMPORT: ArrowUpRight
+import { ArrowLeft, Cpu, ArrowUpRight } from "lucide-react";
 import { notFound } from "next/navigation";
 import { getProject, ALL_PROJECTS } from "@/lib/projects";
 
@@ -100,8 +101,7 @@ export default async function ProjectPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      {/* === HERO SECTION (POPRAWIONA RESPONSYWNOŚĆ) === */}
-      {/* Zmiany: min-h-[100dvh] (zamiast sztywnego h-80vh), dodany pt-32 (padding góry) */}
+      {/* === HERO SECTION === */}
       <section className="relative min-h-[100dvh] md:min-h-[85vh] flex flex-col justify-end pt-32 pb-16 md:pb-24 overflow-hidden">
         
         {/* Tło */}
@@ -121,25 +121,45 @@ export default async function ProjectPage({ params }: PageProps) {
                 Wróć do Portfolio
             </Link>
             
-            {/* Flex container - na mobile kolumna, na desktopie wiersz */}
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 md:gap-12">
                 
-                {/* Lewa kolumna: Tytuł i opis */}
+                {/* Lewa kolumna: Tytuł, opis i NOWY PRZYCISK */}
                 <div className="lg:max-w-3xl">
                     <span className="text-accent-blue font-mono uppercase tracking-widest text-xs md:text-sm bg-accent-blue/10 px-3 py-1 rounded-sm border border-accent-blue/20">
                         {project.category}
                     </span>
-                    {/* H1 zmniejszony na mobile dla czytelności */}
                     <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mt-4 mb-4 tracking-tight leading-tight">
                         {project.title}
                     </h1>
                     <p className="text-lg md:text-xl text-concrete-gray max-w-2xl leading-relaxed">
                         {project.description}
                     </p>
+
+                    {/* === NOWY PRZYCISK: LIQUID GLASS (Widoczny tylko gdy jest liveUrl) === */}
+                    {project.liveUrl && (
+                        <div className="mt-8 md:mt-12">
+                            <a 
+                                href={project.liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group relative inline-flex items-center gap-3 px-8 py-4 text-lg font-bold text-white overflow-hidden rounded-sm transition-all duration-500 hover:scale-105"
+                                aria-label={`Zobacz projekt ${project.title} na żywo`}
+                            >
+                                {/* Tło Liquid Glass (Szkło) */}
+                                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-white/10 via-white/30 to-white/10 backdrop-blur-xl border border-white/20 group-hover:border-accent-blue/50 transition-all z-0"></div>
+                                {/* Animacja Glow (Pulsowanie) */}
+                                <div className="absolute -inset-1 bg-gradient-to-r from-accent-blue/0 via-accent-blue/30 to-accent-blue/0 blur-xl opacity-0 group-hover:opacity-100 transition-all duration-700 z-0 animate-pulse"></div>
+                                
+                                {/* Treść przycisku */}
+                                <span className="relative z-10 tracking-wide flex items-center gap-2 group-hover:text-accent-blue transition-colors">
+                                    ZOBACZ LIVE <ArrowUpRight className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                </span>
+                            </a>
+                        </div>
+                    )}
                 </div>
                 
                 {/* Prawa kolumna: Metadane projektu */}
-                {/* Zmiana: Grid zamiast flex-col, żeby na mobile ładnie się rozłożyło w poziomie lub pionie zależnie od miejsca */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-4 lg:gap-6 bg-white/5 backdrop-blur-md p-6 border border-white/10 rounded-sm lg:min-w-[280px]">
                     <div>
                         <p className="text-[10px] md:text-xs text-white/50 uppercase font-mono mb-1">Klient</p>

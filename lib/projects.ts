@@ -23,6 +23,7 @@ export interface Project {
   solution: string;
   stack: string[];
   gallery: string[];
+  liveUrl?: string; // <--- NOWE POLE OPCJONALNE
 }
 
 export const ALL_PROJECTS: Project[] = [
@@ -38,6 +39,7 @@ export const ALL_PROJECTS: Project[] = [
     client: "Ketelman Ventures (Własne)",
     duration: "18 miesięcy",
     teamSize: "14 Specjalistów",
+    liveUrl: "https://draftngo.com", // <--- LINK DODANY
     stats: [
       { label: "Użytkownicy", value: "45k+", icon: Users },
       { label: "Obrót roczny", value: "€3.2M", icon: BarChart3 },
@@ -57,11 +59,12 @@ export const ALL_PROJECTS: Project[] = [
     type: "holding",
     title: "PlayAgain Store",
     category: "E-commerce / GreenTech",
-    heroImage: "https://res.cloudinary.com/dkfgniqzt/image/upload/v1769033375/Zrzut_ekranu_2026-01-21_o_23.06.19_l7n9r7.png", // Obraz gamingowy/tech
+    heroImage: "https://res.cloudinary.com/dkfgniqzt/image/upload/v1769033375/Zrzut_ekranu_2026-01-21_o_23.06.19_l7n9r7.png", 
     description: "Innowacyjna platforma e-commerce redefiniująca rynek używanego sprzętu komputerowego. PlayAgain to nie tylko sklep, to ekosystem 'Circular Economy', który daje drugie życie topowym podzespołom PC. Wyróżnikiem jest zaawansowany konfigurator 3D, który pozwala graczom budować wymarzone zestawy z części refurbished.",
     client: "Ketelman Ventures (Własne)",
     duration: "W rozwoju (od 2024)",
     teamSize: "6 Specjalistów",
+    liveUrl: "https://playagain.store", // <--- LINK DODANY
     stats: [
       { label: "Oszczędność Klientów", value: "do 40%", icon: ShoppingBag },
       { label: "Redukcja e-odpadów", value: "15kg/PC", icon: Recycle },
@@ -72,8 +75,8 @@ export const ALL_PROJECTS: Project[] = [
     solution: "Stworzyliśmy platformę z pełnym procesem certyfikacji sprzętu. Sercem systemu jest interaktywny Konfigurator PC 3D (Three.js), który wizualizuje zestaw w czasie rzeczywistym i weryfikuje kompatybilność części (AI). Całość oparta o architekturę headless commerce dla maksymalnej wydajności.",
     stack: ["Next.js 14", "MongoDB", "Three.js (R3F)", "Stripe Payments", "Tailwind CSS", "OpenAI API"],
     gallery: [
-      "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=2574&auto=format&fit=crop", // Setup gamingowy
-      "https://images.unsplash.com/photo-1603481588273-2f908a9a7a1b?q=80&w=2670&auto=format&fit=crop"  // Podzespoły PC
+      "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=2574&auto=format&fit=crop", 
+      "https://images.unsplash.com/photo-1603481588273-2f908a9a7a1b?q=80&w=2670&auto=format&fit=crop" 
     ]
   },
   {
@@ -163,7 +166,7 @@ export const ALL_PROJECTS: Project[] = [
     stats: [
       { label: "Odsłony mies.", value: "15k+", icon: Globe },
       { label: "Sprzedaż biletów", value: "+40%", icon: Ticket },
-      { label: "Sklep Online", value: "Tak", icon: checkCircleIconFake() }, // Używamy innej ikony lub tej samej
+      { label: "Sklep Online", value: "Tak", icon: checkCircleIconFake() }, 
       { label: "Fan Engagement", value: "Wysoki", icon: Users },
     ],
     challenge: "Klub tracił kontakt z kibicami w mediach społecznościowych. Brakowało centralnego miejsca z aktualnymi wynikami i możliwością łatwego zakupu koszulek meczowych.",
@@ -176,7 +179,6 @@ export const ALL_PROJECTS: Project[] = [
   }
 ];
 
-// Helper function (hack na ikonę w obiekcie powyżej, żeby TypeScript nie krzyczał przy kopiowaniu)
 function checkCircleIconFake() {
   return CheckCircle2;
 }
